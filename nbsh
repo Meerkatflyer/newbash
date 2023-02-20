@@ -1,0 +1,31 @@
+#! /usr/bin/bash
+
+#this script creates an empty bash script, makes it executable and gives is a basic "hello world" line
+#drop this file anywhere in your $PWD directories
+
+function makeFile()
+{
+	#function to create file, insert the basic text requirements and chmod it to be executable
+	touch $1
+	echo "#! /usr/bin/bash" > $1
+	echo "" >> $1
+	echo "#this is an empty BASH script" >> $1
+	echo "" >> $1
+	echo "echo "hello World!"" >> $1
+	chmod u+x $1
+}
+for vFILES in $@; do
+	#here we iterate through the list of argements and sort them between the help prompt and file names
+	case "$vFILES" in 
+		"-h"|"--help")
+			echo "Type the names of BASH scripts you want to create seperated by spaces."
+			echo "it's really not that complicated, you can even include names after this help prompt."
+			;;
+		$vFILES)
+			#if arg is anything other than the help prompt, run makeFile func
+			makeFile $vFILES
+			echo "created script $vFILES !"
+			;;
+	esac
+done
+
